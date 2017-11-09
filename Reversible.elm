@@ -38,6 +38,11 @@ map (ReversibleFunction function reverse) transform =
     function >> transform >> reverse
 
 
+update : (a -> ReversibleFunction a b) -> (b -> b) -> a -> a
+update accessor function record =
+    map (accessor record) function record
+
+
 
 -- reversible functions related to numbers
 
