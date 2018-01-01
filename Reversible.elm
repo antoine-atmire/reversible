@@ -39,6 +39,15 @@ map (ReversibleFunction function reverse) transform =
 
 
 
+-- reversible functions related to strings
+
+
+characters : ReversibleFunction String (List Char)
+characters =
+    ReversibleFunction String.toList String.fromList
+
+
+
 -- reversible functions related to numbers
 
 
