@@ -1,8 +1,8 @@
 module Reversible exposing (..)
 
 
-type ReversibleFunction a b
-    = ReversibleFunction (a -> b) (b -> a)
+type ReversibleFunction ab ba
+    = ReversibleFunction (ab -> ba) (ba -> ab)
 
 
 
@@ -38,6 +38,11 @@ map (ReversibleFunction function reverse) transform =
     function >> transform >> reverse
 
 
+listMap : ReversibleFunction a (List b) -> (b -> b) -> a -> a
+listMap (ReversibleFunction function reverse) transform =
+    function >> List.map transform >> reverse
+
+
 
 -- reversible functions related to strings
 
@@ -46,6 +51,10 @@ characters : ReversibleFunction String (List Char)
 characters =
     ReversibleFunction String.toList String.fromList
 
+
+mapCharacters : (Char -> Char) -> String -> String
+mapCharacters = 
+        listMap characters
 
 
 -- reversible functions related to numbers
