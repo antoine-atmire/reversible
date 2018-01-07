@@ -1,12 +1,12 @@
 module Reversible exposing (..)
 
 
-type ReversibleFunction ab ba
-    = ReversibleFunction (ab -> ba) (ba -> ab)
+
+-- create and modify reversible functions
 
 
-
--- modify reversible functions
+type ReversibleFunction a b
+    = ReversibleFunction (a -> b) (b -> a)
 
 
 reverse : ReversibleFunction a b -> ReversibleFunction b a
@@ -55,6 +55,7 @@ characters =
 mapCharacters : (Char -> Char) -> String -> String
 mapCharacters = 
         listMap characters
+
 
 
 -- reversible functions related to numbers
