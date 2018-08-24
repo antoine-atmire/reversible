@@ -1,4 +1,4 @@
-module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, characters, listMap, map, mapCharacters, pipe, reverse, subtract)
+module Reversible exposing (ReversibleFunction(..), apply, applyReverse, characters, listMap, map, mapCharacters, pipe, reverse)
 
 -- create and modify reversible functions
 
@@ -56,14 +56,3 @@ mapCharacters =
 
 
 
--- reversible functions related to numbers
-
-
-add : number -> ReversibleFunction number number
-add constant =
-    ReversibleFunction (\value -> value + constant) (\value -> value - constant)
-
-
-subtract : number -> ReversibleFunction number number
-subtract =
-    add >> reverse

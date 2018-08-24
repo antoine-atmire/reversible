@@ -1,21 +1,16 @@
 {
-    "type": "application",
-    "source-directories": [
-        "."
-    ],
-    "elm-version": "0.19.0",
+    "type": "package",
+    "name": "antoine-atmire/reversible",
+    "summary": "Compose reversible functions",
+    "license": "MIT",
+    "version": "1.0.0",
+    "exposed-modules": [
+         "Reversible",
+         "Reversible.Math"
+     ],
+    "elm-version": "0.19.0 <= v < 0.20.0",
     "dependencies": {
-        "direct": {
-            "elm/core": "1.0.0",
-            "elm/html": "1.0.0"
-        },
-        "indirect": {
-            "elm/json": "1.0.0",
-            "elm/virtual-dom": "1.0.0"
-        }
+        "elm/core": "1.0.0 <= v < 2.0.0"
     },
-    "test-dependencies": {
-        "direct": {},
-        "indirect": {}
-    }
+    "test-dependencies": {}
 }
