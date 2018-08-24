@@ -1,6 +1,4 @@
-module Reversible exposing (..)
-
-
+module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, characters, listMap, map, mapCharacters, pipe, reverse, subtract)
 
 -- create and modify reversible functions
 
@@ -34,13 +32,13 @@ applyReverse =
 
 
 map : ReversibleFunction a b -> (b -> b) -> a -> a
-map (ReversibleFunction function reverse) transform =
-    function >> transform >> reverse
+map (ReversibleFunction function reverseFunction) transform =
+    function >> transform >> reverseFunction
 
 
 listMap : ReversibleFunction a (List b) -> (b -> b) -> a -> a
-listMap (ReversibleFunction function reverse) transform =
-    function >> List.map transform >> reverse
+listMap (ReversibleFunction function reverseFunction) transform =
+    function >> List.map transform >> reverseFunction
 
 
 
@@ -53,8 +51,8 @@ characters =
 
 
 mapCharacters : (Char -> Char) -> String -> String
-mapCharacters = 
-        listMap characters
+mapCharacters =
+    listMap characters
 
 
 
