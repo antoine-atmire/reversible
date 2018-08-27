@@ -1,4 +1,4 @@
-module Reversible exposing (ReversibleFunction(..), apply, applyReverse, characters, listMap, map, mapCharacters, pipe, reverse)
+module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, characters, convertInteger, listMap, map, mapCharacters, pipe, reverse, subtract)
 
 -- create and modify reversible functions
 
@@ -41,6 +41,11 @@ listMap (ReversibleFunction function reverseFunction) transform =
     function >> List.map transform >> reverseFunction
 
 
+maybeMap : ReversibleFunction (Maybe a) (Maybe b) -> (b -> b) -> a -> Maybe a
+maybeMap (ReversibleFunction function reverseFunction) transform =
+    Just >> function >> Maybe.map transform >> reverseFunction
+
+
 
 -- reversible functions related to strings
 
@@ -55,4 +60,20 @@ mapCharacters =
     listMap characters
 
 
+convertInteger : ReversibleFunction (Maybe String) (Maybe Int)
+convertInteger =
+    ReversibleFunction (Maybe.andThen String.toInt) (Maybe.map String.fromInt)
 
+
+
+-- reversible functions related to math
+
+
+add : number -> ReversibleFunction number number
+add constant =
+    ReversibleFunction (\value -> value + constant) (\value -> value - constant)
+
+
+subtract : number -> ReversibleFunction number number
+subtract =
+    add >> reverse
