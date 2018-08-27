@@ -77,3 +77,37 @@ add constant =
 subtract : number -> ReversibleFunction number number
 subtract =
     add >> reverse
+
+
+multiplyFloats : Float -> ReversibleFunction (Maybe Float) (Maybe Float)
+multiplyFloats constant =
+    ReversibleFunction (Maybe.map (\value -> value * constant))
+        (\maybe ->
+            if constant == 0 then
+                Nothing
+
+            else
+                Maybe.map (\value -> value / constant) maybe
+        )
+
+
+divideFloat : Float -> ReversibleFunction (Maybe Float) (Maybe Float)
+divideFloat =
+    multiplyFloats >> reverse
+
+
+multiplyInts : Int -> ReversibleFunction (Maybe Int) (Maybe Int)
+multiplyInts constant =
+    ReversibleFunction (Maybe.map (\value -> value * constant))
+        (\maybe ->
+            if constant == 0 then
+                Nothing
+
+            else
+                Maybe.map (\value -> value // constant) maybe
+        )
+
+
+divideInts : Int -> ReversibleFunction (Maybe Int) (Maybe Int)
+divideInts =
+    multiplyInts >> reverse
