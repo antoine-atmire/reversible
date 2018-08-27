@@ -79,8 +79,8 @@ subtract =
     add >> reverse
 
 
-multiplyFloats : Float -> ReversibleFunction (Maybe Float) (Maybe Float)
-multiplyFloats constant =
+multiplyByFloat : Float -> ReversibleFunction (Maybe Float) (Maybe Float)
+multiplyByFloat constant =
     ReversibleFunction (Maybe.map (\value -> value * constant))
         (\maybe ->
             if constant == 0 then
@@ -91,13 +91,13 @@ multiplyFloats constant =
         )
 
 
-divideFloat : Float -> ReversibleFunction (Maybe Float) (Maybe Float)
-divideFloat =
-    multiplyFloats >> reverse
+divideByFloat : Float -> ReversibleFunction (Maybe Float) (Maybe Float)
+divideByFloat =
+    multiplyByFloat >> reverse
 
 
-multiplyInts : Int -> ReversibleFunction (Maybe Int) (Maybe Int)
-multiplyInts constant =
+multiplyByInt : Int -> ReversibleFunction (Maybe Int) (Maybe Int)
+multiplyByInt constant =
     ReversibleFunction (Maybe.map (\value -> value * constant))
         (\maybe ->
             if constant == 0 then
@@ -108,6 +108,6 @@ multiplyInts constant =
         )
 
 
-divideInts : Int -> ReversibleFunction (Maybe Int) (Maybe Int)
-divideInts =
-    multiplyInts >> reverse
+divideByInt : Int -> ReversibleFunction (Maybe Int) (Maybe Int)
+divideByInt =
+    multiplyByInt >> reverse
