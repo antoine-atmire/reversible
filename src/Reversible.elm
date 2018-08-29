@@ -94,20 +94,3 @@ multiplyByFloat constant =
 divideByFloat : Float -> Maybe (ReversibleFunction Float Float)
 divideByFloat =
     multiplyByFloat >> Maybe.map reverse
-
-
-multiplyByInt : Int -> Maybe (ReversibleFunction Int Int)
-multiplyByInt constant =
-    if constant == 0 then
-        Nothing
-
-    else
-        Just <|
-            ReversibleFunction
-                (\value -> value * constant)
-                (\value -> value // constant)
-
-
-divideByInt : Int -> Maybe (ReversibleFunction Int Int)
-divideByInt =
-    multiplyByInt >> Maybe.map reverse
