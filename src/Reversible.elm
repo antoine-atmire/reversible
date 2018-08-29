@@ -79,35 +79,35 @@ subtract =
     add >> reverse
 
 
-multiplyByFloat : Float -> ReversibleFunction (Maybe Float) (Maybe Float)
+multiplyByFloat : Float -> Maybe (ReversibleFunction Float Float)
 multiplyByFloat constant =
-    ReversibleFunction (Maybe.map (\value -> value * constant))
-        (\maybe ->
-            if constant == 0 then
-                Nothing
+    if constant == 0 then
+        Nothing
 
-            else
-                Maybe.map (\value -> value / constant) maybe
-        )
+    else
+        Just <|
+            ReversibleFunction
+                (\value -> value * constant)
+                (\value -> value / constant)
 
 
-divideByFloat : Float -> ReversibleFunction (Maybe Float) (Maybe Float)
+divideByFloat : Float -> Maybe (ReversibleFunction Float Float)
 divideByFloat =
-    multiplyByFloat >> reverse
+    multiplyByFloat >> Maybe.map reverse
 
 
-multiplyByInt : Int -> ReversibleFunction (Maybe Int) (Maybe Int)
+multiplyByInt : Int -> Maybe (ReversibleFunction Int Int)
 multiplyByInt constant =
-    ReversibleFunction (Maybe.map (\value -> value * constant))
-        (\maybe ->
-            if constant == 0 then
-                Nothing
+    if constant == 0 then
+        Nothing
 
-            else
-                Maybe.map (\value -> value // constant) maybe
-        )
+    else
+        Just <|
+            ReversibleFunction
+                (\value -> value * constant)
+                (\value -> value // constant)
 
 
-divideByInt : Int -> ReversibleFunction (Maybe Int) (Maybe Int)
+divideByInt : Int -> Maybe (ReversibleFunction Int Int)
 divideByInt =
-    multiplyByInt >> reverse
+    multiplyByInt >> Maybe.map reverse
