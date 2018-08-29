@@ -1,4 +1,4 @@
-module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, charCode, characters, combine, convertInteger, divideByFloat, liftList, liftMaybe, listMap, map, maybeMap, multiplyByFloat, pipe, reverse, subtract, switchCoordinateStructure)
+module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, charCode, characters, combine, convertInteger, divideByFloat, liftList, liftMaybe, listMap, map, mapWithReversible, maybeMap, multiplyByFloat, pipe, reverse, subtract, switchCoordinateStructure)
 
 -- create and modify reversible functions
 
@@ -49,6 +49,14 @@ listMap (ReversibleFunction function reverseFunction) transform =
 maybeMap : ReversibleFunction (Maybe a) (Maybe b) -> (b -> b) -> a -> Maybe a
 maybeMap (ReversibleFunction function reverseFunction) transform =
     Just >> function >> Maybe.map transform >> reverseFunction
+
+
+mapWithReversible : ReversibleFunction a b -> ReversibleFunction b b -> a -> a
+mapWithReversible first second =
+    first
+        |> pipe second
+        |> pipe (reverse first)
+        |> apply
 
 
 liftList : ReversibleFunction a b -> ReversibleFunction (List a) (List b)

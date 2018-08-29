@@ -19,7 +19,8 @@ suite =
 testAddition : List Test
 testAddition =
     [ test "add" <|
-        \_ -> Expect.equal (apply (add 2) 1) (1 + 2)
+        \_ ->
+            Expect.equal (apply (add 2) 1) (1 + 2)
     , test "reverse add" <|
         \_ ->
             Expect.equal (applyReverse (add 2) 1) (1 - 2)
@@ -107,6 +108,9 @@ testMaps =
     , test "maybeMap" <|
         \_ ->
             Expect.equal (maybeMap convertInteger ((*) 2) "111") (Just "222")
+    , test "mapWithReversible" <|
+        \_ ->
+            Expect.equal (mapWithReversible charCode (add 1) 'a') 'b'
     ]
 
 
@@ -143,4 +147,13 @@ testPipe =
                         |> pipe (add 4)
             in
             Expect.equal (apply addTen 1) 11
+    , test "pipe shift charCode" <|
+        \_ ->
+            let
+                shift =
+                    charCode
+                        |> pipe (add 1)
+                        |> pipe (reverse charCode)
+            in
+            Expect.equal (apply shift 'a') 'b'
     ]
