@@ -1,4 +1,4 @@
-module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, characters, convertInteger, listMap, map, mapCharacters, pipe, reverse, subtract)
+module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, characters, convertInteger, divideByFloat, listMap, map, mapCharacters, maybeMap, multiplyByFloat, pipe, reverse, subtract)
 
 -- create and modify reversible functions
 
