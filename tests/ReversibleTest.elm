@@ -8,10 +8,11 @@ import Test exposing (Test, describe, test)
 suite : Test
 suite =
     describe "The Reversible module"
-        [ describe "addition" testAddition
-        , describe "multiplication" testMultiplication
-        , describe "strings" testStrings
-        , describe "maps" testMaps
+        [ describe "test addition" testAddition
+        , describe "test multiplication" testMultiplication
+        , describe "test strings" testStrings
+        , describe "test maps" testMaps
+        , describe "test combine/pipe" testPipe
         ]
 
 
@@ -106,4 +107,40 @@ testMaps =
     , test "maybeMap" <|
         \_ ->
             Expect.equal (maybeMap convertInteger ((*) 2) "111") (Just "222")
+    ]
+
+
+testPipe : List Test
+testPipe =
+    [ test "combine charCodeList" <|
+        \_ ->
+            let
+                charCodeList =
+                    combine characters (liftList charCode)
+            in
+            Expect.equal (listMap charCodeList (\c -> c + 32) "ABCXYZ") "abcxyz"
+    , test "combine additions" <|
+        \_ ->
+            let
+                addTen =
+                    combine (add 3) (add 7)
+            in
+            Expect.equal (apply addTen 1) 11
+    , test "increment number in a string" <|
+        \_ ->
+            let
+                increment =
+                    combine convertInteger (liftMaybe (add 1))
+            in
+            Expect.equal (apply increment (Just "9")) (Just 10)
+    , test "pipe additions" <|
+        \_ ->
+            let
+                addTen =
+                    add 1
+                        |> pipe (add 2)
+                        |> pipe (add 3)
+                        |> pipe (add 4)
+            in
+            Expect.equal (apply addTen 1) 11
     ]

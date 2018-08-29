@@ -1,4 +1,4 @@
-module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, characters, convertInteger, divideByFloat, listMap, map, maybeMap, multiplyByFloat, pipe, reverse, subtract, switchCoordinateStructure)
+module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, charCode, characters, combine, convertInteger, divideByFloat, liftList, liftMaybe, listMap, map, maybeMap, multiplyByFloat, pipe, reverse, subtract, switchCoordinateStructure)
 
 -- create and modify reversible functions
 
@@ -12,9 +12,14 @@ reverse (ReversibleFunction a b) =
     ReversibleFunction b a
 
 
-pipe : ReversibleFunction a b -> ReversibleFunction b c -> ReversibleFunction a c
-pipe (ReversibleFunction ab ba) (ReversibleFunction bc cb) =
+combine : ReversibleFunction a b -> ReversibleFunction b c -> ReversibleFunction a c
+combine (ReversibleFunction ab ba) (ReversibleFunction bc cb) =
     ReversibleFunction (ab >> bc) (cb >> ba)
+
+
+pipe : ReversibleFunction b c -> ReversibleFunction a b -> ReversibleFunction a c
+pipe second first =
+    combine first second
 
 
 
@@ -46,6 +51,16 @@ maybeMap (ReversibleFunction function reverseFunction) transform =
     Just >> function >> Maybe.map transform >> reverseFunction
 
 
+liftList : ReversibleFunction a b -> ReversibleFunction (List a) (List b)
+liftList (ReversibleFunction function reverseFunction) =
+    ReversibleFunction (List.map function) (List.map reverseFunction)
+
+
+liftMaybe : ReversibleFunction a b -> ReversibleFunction (Maybe a) (Maybe b)
+liftMaybe (ReversibleFunction function reverseFunction) =
+    ReversibleFunction (Maybe.map function) (Maybe.map reverseFunction)
+
+
 
 -- reversible functions related to strings
 
@@ -53,6 +68,11 @@ maybeMap (ReversibleFunction function reverseFunction) transform =
 characters : ReversibleFunction String (List Char)
 characters =
     ReversibleFunction String.toList String.fromList
+
+
+charCode : ReversibleFunction Char Int
+charCode =
+    ReversibleFunction Char.toCode Char.fromCode
 
 
 convertInteger : ReversibleFunction (Maybe String) (Maybe Int)
