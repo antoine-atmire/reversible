@@ -1,4 +1,4 @@
-module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, characters, convertInteger, divideByFloat, listMap, map, maybeMap, multiplyByFloat, pipe, reverse, subtract)
+module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, characters, convertInteger, divideByFloat, listMap, map, maybeMap, multiplyByFloat, pipe, reverse, subtract, switchCoordinateStructure)
 
 -- create and modify reversible functions
 
@@ -89,3 +89,8 @@ multiplyByFloat constant =
 divideByFloat : Float -> Maybe (ReversibleFunction Float Float)
 divideByFloat =
     multiplyByFloat >> Maybe.map reverse
+
+
+switchCoordinateStructure : ReversibleFunction ( number, number ) { x : number, y : number }
+switchCoordinateStructure =
+    ReversibleFunction (\( x, y ) -> { x = x, y = y }) (\{ x, y } -> ( x, y ))

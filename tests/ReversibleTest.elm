@@ -11,6 +11,7 @@ suite =
         [ describe "addition" testAddition
         , describe "multiplication" testMultiplication
         , describe "strings" testStrings
+        , describe "maps" testMaps
         ]
 
 
@@ -89,4 +90,20 @@ testStrings =
     , test "reverse convertInteger nothing" <|
         \_ ->
             Expect.equal (applyReverse convertInteger Nothing) Nothing
+    ]
+
+
+testMaps : List Test
+testMaps =
+    [ test "map" <|
+        \_ ->
+            Expect.equal
+                (map switchCoordinateStructure (\{ x, y } -> { x = y, y = x }) ( 0, 5 ))
+                ( 5, 0 )
+    , test "listMap" <|
+        \_ ->
+            Expect.equal (listMap characters Char.toUpper "a/b/c") "A/B/C"
+    , test "maybeMap" <|
+        \_ ->
+            Expect.equal (maybeMap convertInteger ((*) 2) "111") (Just "222")
     ]
