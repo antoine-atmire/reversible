@@ -10,6 +10,7 @@ suite =
     describe "The Reversible module"
         [ describe "addition" testAddition
         , describe "multiplication" testMultiplication
+        , describe "strings" testStrings
         ]
 
 
@@ -66,3 +67,26 @@ testMultiplication =
 equalFloats : Float -> Float -> Expectation
 equalFloats =
     Expect.within (Absolute 0.000000001)
+
+
+testStrings : List Test
+testStrings =
+    [ test "characters" <|
+        \_ ->
+            Expect.equal (apply characters "abc") [ 'a', 'b', 'c' ]
+    , test "reverse characters" <|
+        \_ ->
+            Expect.equal (applyReverse characters [ 'a', 'b', 'c' ]) "abc"
+    , test "convertInteger" <|
+        \_ ->
+            Expect.equal (apply convertInteger (Just "91")) (Just 91)
+    , test "convertInteger not an integer" <|
+        \_ ->
+            Expect.equal (apply convertInteger (Just "a")) Nothing
+    , test "reverse convertInteger" <|
+        \_ ->
+            Expect.equal (applyReverse convertInteger (Just 91)) (Just "91")
+    , test "reverse convertInteger nothing" <|
+        \_ ->
+            Expect.equal (applyReverse convertInteger Nothing) Nothing
+    ]

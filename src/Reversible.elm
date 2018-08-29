@@ -1,4 +1,4 @@
-module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, characters, convertInteger, divideByFloat, listMap, map, mapCharacters, maybeMap, multiplyByFloat, pipe, reverse, subtract)
+module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, characters, convertInteger, divideByFloat, listMap, map, maybeMap, multiplyByFloat, pipe, reverse, subtract)
 
 -- create and modify reversible functions
 
@@ -53,11 +53,6 @@ maybeMap (ReversibleFunction function reverseFunction) transform =
 characters : ReversibleFunction String (List Char)
 characters =
     ReversibleFunction String.toList String.fromList
-
-
-mapCharacters : (Char -> Char) -> String -> String
-mapCharacters =
-    listMap characters
 
 
 convertInteger : ReversibleFunction (Maybe String) (Maybe Int)
