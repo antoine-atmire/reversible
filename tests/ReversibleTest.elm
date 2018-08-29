@@ -1,6 +1,6 @@
 module ReversibleTest exposing (suite)
 
-import Expect exposing (FloatingPointTolerance(..))
+import Expect exposing (Expectation, FloatingPointTolerance(..))
 import Reversible exposing (..)
 import Test exposing (Test, describe, test)
 
@@ -50,14 +50,19 @@ testMultiplication =
     in
     [ test "multiply" <|
         \_ ->
-            Expect.within (Absolute 0.000000001) (apply multiplyByTen 3) (3 * 10)
+            equalFloats (apply multiplyByTen 3) (3 * 10)
     , test "reverse multiply" <|
         \_ ->
-            Expect.within (Absolute 0.000000001) (applyReverse multiplyByTen 3) (3 / 10)
+            equalFloats (applyReverse multiplyByTen 3) (3 / 10)
     , test "divide" <|
         \_ ->
-            Expect.within (Absolute 0.000000001) (apply divideByTen 3) (3 / 10)
+            equalFloats (apply divideByTen 3) (3 / 10)
     , test "reverse divide" <|
         \_ ->
-            Expect.within (Absolute 0.000000001) (applyReverse divideByTen 3) (3 * 10)
+            equalFloats (applyReverse divideByTen 3) (3 * 10)
     ]
+
+
+equalFloats : Float -> Float -> Expectation
+equalFloats =
+    Expect.within (Absolute 0.000000001)
