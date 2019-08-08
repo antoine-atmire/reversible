@@ -92,6 +92,15 @@ testStrings =
     , test "reverse convertInteger nothing" <|
         \_ ->
             Expect.equal (applyReverse convertInteger Nothing) Nothing
+    , test "lines" <|
+        \_ ->
+            Expect.equal (apply lines "a\nb\nc") [ "a", "b", "c" ]
+    , test "reverse lines" <|
+        \_ ->
+            Expect.equal (applyReverse lines [ "a", "b", "c" ]) "a\nb\nc"
+    , test "mapLines" <|
+        \_ ->
+            Expect.equal (mapLines (\s -> s ++ s) "a\nb\nc") "aa\nbb\ncc"
     ]
 
 

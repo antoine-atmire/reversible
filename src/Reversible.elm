@@ -1,4 +1,4 @@
-module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, charCode, characters, combine, convertInteger, divideByFloat, liftList, liftMaybe, listMap, map, mapWithReversible, maybeMap, multiplyByFloat, pipe, reverse, subtract, switchCoordinateStructure)
+module Reversible exposing (ReversibleFunction(..), add, apply, applyReverse, charCode, characters, combine, convertInteger, divideByFloat, liftList, liftMaybe, lines, listMap, map, mapLines, mapWithReversible, maybeMap, multiplyByFloat, pipe, reverse, subtract, switchCoordinateStructure)
 
 -- create and modify reversible functions
 
@@ -86,6 +86,16 @@ charCode =
 convertInteger : ReversibleFunction (Maybe String) (Maybe Int)
 convertInteger =
     ReversibleFunction (Maybe.andThen String.toInt) (Maybe.map String.fromInt)
+
+
+lines : ReversibleFunction String (List String)
+lines =
+    ReversibleFunction String.lines (String.join "\n")
+
+
+mapLines : (String -> String) -> String -> String
+mapLines =
+    listMap lines
 
 
 
